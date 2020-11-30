@@ -1,3 +1,5 @@
+package Server;
+
 
 import java.io.File;
 import java.util.Scanner;
@@ -14,6 +16,8 @@ public class SyncServer {
 		this.timeStamp = file.lastModified();
 	}
 	
+	//function for sending from server to client
+	
 	public static void main(String[] args) throws InterruptedException {
 		
 		ZMQ.Context context = ZMQ.context(1);
@@ -29,7 +33,7 @@ public class SyncServer {
 		//setting the first timestamp
 //		System.out.print("Enter your file's address: ");
 //        Scanner file_input = new Scanner(System.in);
-        SyncServer newServer = new SyncServer(new File("C:\\Users\\izien\\Documents\\Distributed Systems\\File-Synchronizer\\src\\sample.txt"));
+        SyncServer newServer = new SyncServer(new File("C:\\Users\\izien\\Documents\\Distributed Systems\\File-Synchronizer\\src\\Server\\sample.txt"));
         //!Thread.currentThread().isInterrupted()
 		 while (true) {
 			 	Thread.sleep(500);
