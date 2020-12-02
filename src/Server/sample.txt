@@ -1,1 +1,11 @@
-something else
+This is the change that won't show!
+
+This is the change that will show!
+
+width=1300, height = 233
+
+first section height = 243 to 347
+
+keys
+first key starts at x = 10 and size is 104
+second key starts at desuuu

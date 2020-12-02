@@ -19,7 +19,7 @@ public class SyncServer {
 	//function for sending from server to client
 	
 	public static void main(String[] args) throws InterruptedException {
-		
+		int first_change = 0;
 		ZMQ.Context context = ZMQ.context(1);
 		
 		ZMQ.Socket server = context.socket(SocketType.PUB);
@@ -36,19 +36,24 @@ public class SyncServer {
         SyncServer newServer = new SyncServer(new File("C:\\Users\\izien\\Documents\\Distributed Systems\\File-Synchronizer\\src\\Server\\sample.txt"));
         //!Thread.currentThread().isInterrupted()
 		 while (true) {
-			 	Thread.sleep(500);
 			 	long timeStamp = newServer.file.lastModified();
 	        	if(newServer.timeStamp != timeStamp) {
+	      
 	        		newServer.timeStamp = timeStamp;
 	        		String data = "new";
 	                String dest = String.format("%d", groupNum);
 	                server.send(dest, ZMQ.SNDMORE);
 	                server.send(data);		
+	                //to take care of the first change that isn't detected
+	        		first_change++;
+	        		if(first_change > 1) {
+	        			//run fileserver
+		        		FileServer fileServer = new FileServer(3500);
+		        		fileServer.run(2);
+	        		}
 	        		System.out.println("File's changed!");
 	        	}
-//	            String dest = String.format("%d", groupNum);
-//	            server.send(dest, ZMQ.SNDMORE);
-//	            server.send("Welcome to group "+ groupNum);
+
 	        }
 //		server.close();
 //		context.term();

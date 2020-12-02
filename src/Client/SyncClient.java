@@ -14,11 +14,11 @@ import org.zeromq.ZMQ;
 public class SyncClient {
 	
 	//for updating server with the new file
-	public void fileUpdate(String from, String to) throws IOException {
-		Path src = Paths.get(from);
-		Path dest = Paths.get(to);
-		Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
-	}
+//	public void fileUpdate(String from, String to) throws IOException {
+//		Path src = Paths.get(from);
+//		Path dest = Paths.get(to);
+//		Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
+//	}
 	
 	public static void main(String[] args) {
 		ZMQ.Context context = ZMQ.context(1);
@@ -42,6 +42,12 @@ public class SyncClient {
                  break;
              }
              String data = client.recvStr();
+             //if new notification is received, run client to get its new file from server?
+             if(data.equals("new")) {
+            	 System.out.println("File client started");
+            	 FileClient fileClient = new FileClient("localhost", 3500);
+            	 fileClient.run();
+             }
              assert (topic.equals(subscription));
              System.out.println("Received for gorup: [" + topic + "] File status: " + data);
         }
