@@ -8,4 +8,4 @@ first section height = 243 to 347
 
 keys
 first key starts at x = 10 and size is 104
-second key starts at desuuu
+second key starts at des

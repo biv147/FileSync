@@ -9,27 +9,27 @@ import java.net.Socket;
 public class FileServer {
 	int portNum;
 	private ServerSocket server;
-	int clientNo;
+//	int clientNo;
 	
 	public FileServer(int pn) {
 		portNum = pn;
 	}
 	
-	public void run(int clientNum) {
-		clientNum = clientNo;
+	public void run() {
+//		clientNum = clientNo;
 		try {
 			server = new ServerSocket(portNum);
 			while(true){
-				System.out.println("FileServer is starting");
+				
                 Socket client = server.accept(); //accept the incoming client
-                clientNo++;
+//                clientNo++;
                 System.out.println("Accepted!");
                 Connection connects = new Connection(client); //create connection object and passes client socket
 				connects.start(); //calls run() function in Connection class
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-//			System.out.println("FileServer run method error: " + e.getMessage());
+			System.out.println("FileServer run method error: " + e.getMessage());
 		}
 	}
 	
@@ -67,12 +67,12 @@ public class FileServer {
                 	closer = is.readLine();
                 }
                 cs.close();
-                clientNo--;
-                System.out.println("FileServer closed");
+//                clientNo--;
+//                System.out.println("FileServer closed");
 //                System.out.println(clientNo);
-                if(clientNo == 0) {
-                	server.close();
-                }
+//                if(clientNo == 0) {
+//                	server.close();
+//                }
 			} catch (Exception e) {
 				// TODO: handle exception
 				System.out.println("Connection run method error: " + e.getMessage());

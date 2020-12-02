@@ -19,6 +19,16 @@ public class SyncServer {
 	//function for sending from server to client
 	
 	public static void main(String[] args) throws InterruptedException {
+		Thread thread = new Thread() {
+			public void run() {
+				//run fileserver in thread
+				FileServer fileServer = new FileServer(3500);
+				fileServer.run();
+			}
+		};
+		
+		thread.start();
+		
 		int first_change = 0;
 		ZMQ.Context context = ZMQ.context(1);
 		
@@ -46,11 +56,9 @@ public class SyncServer {
 	                server.send(data);		
 	                //to take care of the first change that isn't detected
 	        		first_change++;
-	        		if(first_change > 1) {
-	        			//run fileserver
-		        		FileServer fileServer = new FileServer(3500);
-		        		fileServer.run(2);
-	        		}
+//	        		if(first_change > 1) {
+//	        			
+//	        		}
 	        		System.out.println("File's changed!");
 	        	}
 
